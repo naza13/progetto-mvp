@@ -19,7 +19,7 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'backend'
+      - 'backend-mvp'
       - '--image=gcr.io/$PROJECT_ID/backend:$COMMIT_SHA'
       - '--region=europe-west1'
       - '--platform=managed'
@@ -45,7 +45,7 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'dashboard'
+      - 'dashboard-mvp'
       - '--image=gcr.io/$PROJECT_ID/dashboard:$COMMIT_SHA'
       - '--region=europe-west1'
       - '--platform=managed'
