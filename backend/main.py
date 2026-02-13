@@ -7,7 +7,7 @@ from datetime import datetime
 from google.cloud import bigquery
 import firebase_admin
 from firebase_admin import credentials, firestore
-from config import PROJECT_ID, PORT
+from config import PROJECT_ID, PORT, BIGQUERY_DATASET, BIGQUERY_TABLE
 
 app = FastAPI(title="MVP Data & CRUD API")
 
@@ -96,7 +96,7 @@ async def analyze_and_store(payload: DataPayload):
             raise HTTPException(400, "Dataset vuoto")
         
         # Salvataggio su BigQuery
-        table_id = f"{PROJECT_ID}.mvp_dataset.processed_table"
+        table_id = f"{PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_TABLE}"
         job = bq_client.load_table_from_dataframe(df, table_id)
         job.result()
         

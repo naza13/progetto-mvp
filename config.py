@@ -83,7 +83,26 @@ class Config:
         return os.getenv("K_SERVICE") is not None or os.getenv("GAE_ENV") is not None
 
 
-# Variabili globali per import facile
+# ========================================
+# CONFIGURAZIONE PROGETTO
+# ========================================
+# Modifica questi valori per ogni nuovo progetto
+
+# Nome del servizio backend su Cloud Run
+BACKEND_SERVICE_NAME = "backend-mvp"
+
+# Nome del servizio dashboard su Cloud Run  
+DASHBOARD_SERVICE_NAME = "dashboard-mvp"
+
+# Nome del dataset BigQuery
+BIGQUERY_DATASET = "mvp_dataset"
+
+# Nome della tabella BigQuery per i dati processati
+BIGQUERY_TABLE = "processed_table"
+
+# ========================================
+# VARIABILI AUTO-RILEVATE (non modificare)
+# ========================================
 PROJECT_ID = Config.get_project_id()
 BACKEND_URL = Config.get_backend_url()
 PORT = Config.get_port()
@@ -99,6 +118,12 @@ if __name__ == "__main__":
     print(f"Backend URL: {BACKEND_URL}")
     print(f"Port: {PORT}")
     print(f"Ambiente: {'PRODUZIONE' if IS_PRODUCTION else 'LOCALE'}")
+    print("=" * 50)
+    print("\nCONFIGURAZIONE PROGETTO:")
+    print(f"Backend Service: {BACKEND_SERVICE_NAME}")
+    print(f"Dashboard Service: {DASHBOARD_SERVICE_NAME}")
+    print(f"BigQuery Dataset: {BIGQUERY_DATASET}")
+    print(f"BigQuery Table: {BIGQUERY_TABLE}")
     print("=" * 50)
     print("\nVariabili d'ambiente GCP:")
     for var in ["K_SERVICE", "GOOGLE_CLOUD_PROJECT", "GCP_PROJECT", "BACKEND_URL"]:

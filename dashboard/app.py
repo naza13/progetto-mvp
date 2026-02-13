@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import os
 from google.cloud import bigquery
-from config import PROJECT_ID, BACKEND_URL
+from config import PROJECT_ID, BACKEND_URL, BIGQUERY_DATASET, BIGQUERY_TABLE
 
 # --- CONFIGURAZIONE CREDENZIALI ---
 if os.path.exists("keys.json"):
@@ -58,7 +58,7 @@ with tab2:
     st.header("Query Diretta BigQuery")
     query = st.text_area(
         "SQL Editor", 
-        f"SELECT * FROM `{PROJECT_ID}.mvp_dataset.processed_table` LIMIT 10",
+        f"SELECT * FROM `{PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_TABLE}` LIMIT 10",
         height=150
     )
     if st.button("Esegui SQL"):
