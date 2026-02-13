@@ -95,7 +95,7 @@ BACKEND_SERVICE_NAME = "backend-mvp"
 DASHBOARD_SERVICE_NAME = "dashboard-mvp"
 
 # Nome del dataset BigQuery
-BIGQUERY_DATASET = "mvp_dataset"
+BIGQUERY_DATASET = "test_auto_create"
 
 # Nome della tabella BigQuery per i dati processati
 BIGQUERY_TABLE = "processed_table"
