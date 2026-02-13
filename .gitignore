@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# GCP & Credenziali
+keys.json
+
+# OS
+.DS_Store
