@@ -86,14 +86,23 @@ async def delete_item(item_id: str):
     doc_ref.delete()
     return {"status": "deleted"}
 
-# --- 5. OPERAZIONE SPECIALE: DATA ANALYSIS (Ingestione BQ) ---
-@app.post("/analyze")
+# --- 5. OPERAZIONE SPECIALE: DATA ANALYSIS (Ingestione BQ) ---@app.post("/analyze")
 async def analyze_and_store(payload: DataPayload):
     """Processa dati massivi e li salva su BigQuery."""
     try:
         df = pd.DataFrame(payload.data)
         if df.empty:
             raise HTTPException(400, "Dataset vuoto")
+        
+        # Crea il dataset se non esiste
+        dataset_id = f"{PROJECT_ID}.{BIGQUERY_DATASET}"
+        try:
+            bq_client.get_dataset(dataset_id)
+        except Exception:
+            # Dataset non esiste, crealo
+            dataset = bigquery.Dataset(dataset_id)
+            dataset.location = "EU"  # Cambia se usi altra region
+            bq_client.create_dataset(dataset, exists_ok=True)
         
         # Salvataggio su BigQuery
         table_id = f"{PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_TABLE}"
