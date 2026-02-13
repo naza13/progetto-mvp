@@ -6,4 +6,4 @@ google-cloud-bigquery
 google-cloud-firestore
 firebase-admin
 pandas-gbq
-db-types
+db-dtypes
