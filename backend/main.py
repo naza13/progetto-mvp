@@ -86,7 +86,8 @@ async def delete_item(item_id: str):
     doc_ref.delete()
     return {"status": "deleted"}
 
-# --- 5. OPERAZIONE SPECIALE: DATA ANALYSIS (Ingestione BQ) ---@app.post("/analyze")
+# --- 5. OPERAZIONE SPECIALE: DATA ANALYSIS (Ingestione BQ) ---
+@app.post("/analyze")
 async def analyze_and_store(payload: DataPayload):
     """Processa dati massivi e li salva su BigQuery."""
     try:
