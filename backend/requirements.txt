@@ -7,3 +7,4 @@ google-cloud-firestore
 firebase-admin
 pandas-gbq
 db-dtypes
+requests

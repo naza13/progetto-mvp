@@ -1,0 +1,59 @@
+steps:
+  # === BUILD BACKEND ===
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/backend:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/backend:latest'
+      - '-f'
+      - 'backend/Dockerfile'
+      - '.'
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/backend:$COMMIT_SHA']
+  
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'backend'
+      - '--image=gcr.io/$PROJECT_ID/backend:$COMMIT_SHA'
+      - '--region=europe-west1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+
+  # === BUILD DASHBOARD ===
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/dashboard:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/dashboard:latest'
+      - '-f'
+      - 'dashboard/Dockerfile'
+      - '.'
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/dashboard:$COMMIT_SHA']
+  
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'dashboard'
+      - '--image=gcr.io/$PROJECT_ID/dashboard:$COMMIT_SHA'
+      - '--region=europe-west1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars=BACKEND_URL=https://backend-mvp-392180154441.europe-west1.run.app'
+
+images:
+  - 'gcr.io/$PROJECT_ID/backend:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/backend:latest'
+  - 'gcr.io/$PROJECT_ID/dashboard:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/dashboard:latest'

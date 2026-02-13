@@ -7,12 +7,9 @@ from datetime import datetime
 from google.cloud import bigquery
 import firebase_admin
 from firebase_admin import credentials, firestore
+from config import PROJECT_ID, PORT
 
 app = FastAPI(title="MVP Data & CRUD API")
-
-# --- CONFIGURAZIONE AMBIENTE & FALLBACK ---
-PORT = int(os.environ.get("PORT", 8080))
-PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "project-id-locale")
 
 if not firebase_admin._apps:
     if os.path.exists("keys.json"):
